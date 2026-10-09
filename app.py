@@ -1,8 +1,22 @@
+from flask import Flask, jsonify, request
+
 def add(a, b):
-    return a + b
+return a + b
 
+app = Flask(**name**)
 
-if __name__ == "__main__":
-    print("CI/CD Demo Application")
-    print("2 + 3 =", add(2, 3))
-    # Automatic CI/CD trigger verification
+@app.route("/")
+def home():
+return jsonify({
+"message": "CI/CD Demo Application",
+"result": add(2, 3)
+})
+
+@app.route("/add")
+def addition():
+a = int(request.args.get("a", 0))
+b = int(request.args.get("b", 0))
+return jsonify({"result": add(a, b)})
+
+if **name** == "**main**":
+app.run(host="0.0.0.0", port=5000)
