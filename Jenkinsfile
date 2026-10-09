@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -5,17 +6,17 @@ pipeline {
         DOCKER_IMAGE = 'subhaparamesh/cicd-demo'
     }
 
-    
-stage('Build and Test') {
-    steps {
-        sh '''
-            python3 -m compileall -q app.py
-            python3 -m venv .venv
-            .venv/bin/python -m pip install -r requirements.txt
-            .venv/bin/python -m pytest -v
-        '''
-    }
-}
+    stages {
+        stage('Build and Test') {
+            steps {
+                sh '''
+                    python3 -m compileall -q app.py
+                    python3 -m venv .venv
+                    .venv/bin/python -m pip install -r requirements.txt
+                    .venv/bin/python -m pytest -v
+                '''
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -58,3 +59,4 @@ stage('Build and Test') {
         }
     }
 }
+```
