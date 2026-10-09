@@ -41,14 +41,15 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-            steps {
-                sh '''
-                    kubectl set image deployment/cicd-demo \
-                      cicd-demo=$DOCKER_IMAGE:$BUILD_NUMBER
-                    kubectl rollout status deployment/cicd-demo --timeout=120s
-                '''
-            }
-        }
+    steps {
+        sh '''
+            export KUBECONFIG=/var/lib/jenkins/.kube/config
+            kubectl set image deployment/cicd-demo \
+              cicd-demo=$DOCKER_IMAGE:$BUILD_NUMBER
+            kubectl rollout status deployment/cicd-demo --timeout=120s
+        '''
+    }
+}
 
         stage('Verify Deployment') {
             steps {
